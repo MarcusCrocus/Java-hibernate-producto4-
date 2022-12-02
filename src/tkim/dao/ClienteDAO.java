@@ -77,4 +77,22 @@ public class ClienteDAO implements IClienteDAO {
 		}
 	}
 
+	@Override
+	public List<Cliente> mostrarClientesXtipo(String tipoCliente) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Cliente> mostrarClientesTodos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Cliente buscarCliente(String codigo_cliente) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
