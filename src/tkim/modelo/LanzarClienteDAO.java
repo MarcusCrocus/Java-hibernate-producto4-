@@ -40,7 +40,7 @@ public String save(String nif, String nombre, String domi, String mail,String ti
 
 	public List<Cliente> mostrarClientesXtipo(String tipoCliente) {
 		IClienteDAO dao = (IClienteDAO) FactoryDAOs.getDAO("Cliente");
-		return null;
+		return dao.mostrarClientesXtipo(tipoCliente);
 	}
 	
 	public List<Cliente> mostrarClientesTodos(){
@@ -50,7 +50,7 @@ public String save(String nif, String nombre, String domi, String mail,String ti
 
 	public Cliente buscarCliente(String codigo_cliente) {
 		IClienteDAO dao = (IClienteDAO) FactoryDAOs.getDAO("Cliente");
-		return null;
+		return dao.buscarCliente(codigo_cliente);
 	}
 
 }
