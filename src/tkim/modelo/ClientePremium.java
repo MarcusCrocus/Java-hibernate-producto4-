@@ -1,7 +1,15 @@
 package tkim.modelo;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue(value="Cliente Premium")
 public class ClientePremium extends Cliente {
 	
+	public ClientePremium() {
+		
+	}
 	public ClientePremium(String nombre, String domicilio, String nif, String email) {
 		super(nombre, domicilio, nif, email);
 		

@@ -2,33 +2,55 @@ package tkim.modelo;
 
 import java.util.List;
 
-import tkim.dao.IArticuloDAO;
+import tkim.dao.IClienteDAO;
 
 public class LanzarClienteDAO {
 
-	public String addArticulo(String codigo, String descripcion, float precioVenta, float gastosEnvio,
-			int tiempoPreparacion) {
-
+public String save(String nif, String nombre, String domi, String mail,String tipoCliente) {
+		
 		try {
-			Articulo articulo = new Articulo(codigo, descripcion, precioVenta, gastosEnvio, tiempoPreparacion);
-			IArticuloDAO dao = (IArticuloDAO) FactoryDAOs.getDAO("Articulo");
-			//return dao.addArticulos(articulo);
-			return dao.save(articulo);
-
+			
+			switch (tipoCliente) {
+			
+			case "1":
+				Cliente cliEst = new ClienteEstandar (nif, nombre, domi, mail);
+				IClienteDAO dao = (IClienteDAO) FactoryDAOs.getDAO("Cliente");
+				return dao.save(cliEst);
+				
+			case "2":
+				Cliente cliPrem = new ClientePremium (nif, nombre, domi, mail);
+				IClienteDAO daoP = (IClienteDAO)FactoryDAOs.getDAO("Cliente");
+				return daoP.save(cliPrem);
+			}
+			
 		} catch (Exception e) {
-			return "El articulo no ha podido introducirse correctamente";
+			return "El Cliente no ha podido introducirse correctamente";
 		}
-	}
-	
-	public List<Articulo> mostrarArticulos(){
-		IArticuloDAO dao = (IArticuloDAO) FactoryDAOs.getDAO("Articulo");
-		return dao.mostrarArticulos();
+		
+		return "El Cliente se ha anadido correctamente";
 		
 	}
 	
-	public Boolean existeArticulo(String codigo) {
-		IArticuloDAO dao = (IArticuloDAO) FactoryDAOs.getDAO("Articulo");
-		return dao.existeArticulo(codigo);
+	public Boolean existeCliente(String nif) {
+		IClienteDAO dao = (IClienteDAO) FactoryDAOs.getDAO("Cliente");
+		return dao.existeCliente(nif);
+		
+	}
+
+
+	public List<Cliente> mostrarClientesXtipo(String tipoCliente) {
+		IClienteDAO dao = (IClienteDAO) FactoryDAOs.getDAO("Cliente");
+		return null;
+	}
+	
+	public List<Cliente> mostrarClientesTodos(){
+		IClienteDAO dao = (IClienteDAO) FactoryDAOs.getDAO("Cliente");
+		return dao.mostrarCliente();
+	}
+
+	public Cliente buscarCliente(String codigo_cliente) {
+		IClienteDAO dao = (IClienteDAO) FactoryDAOs.getDAO("Cliente");
+		return null;
 	}
 
 }

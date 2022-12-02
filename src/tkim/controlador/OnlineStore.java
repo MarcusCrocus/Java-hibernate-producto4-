@@ -225,9 +225,9 @@ public class OnlineStore {
 		System.out.println("############################# CLIENTES ###################################");
 		System.out.println("##########################################################################");
 		System.out.println("");
-		/*for (Cliente cliente : contro.datos.getClientes().getDato()) {
+		for (Cliente cliente : contro.mostrarClientesTodos()) {
 			System.out.println(cliente + "\n");
-		}*/
+		}
 		System.out.println("");
 		System.out.println("##########################################################################");
 		System.out.println("############################# CLIENTES ###################################");

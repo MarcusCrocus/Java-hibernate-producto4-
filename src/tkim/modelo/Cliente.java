@@ -1,9 +1,25 @@
 package tkim.modelo;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Clientes")
+@DiscriminatorColumn(name="tipo_cliente")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Cliente {
+	@Column
 	private String nombre;
+	@Column
 	private String domicilio;
+	@Id
 	private String nif;
+	@Column
 	private String email;
 	
 	public abstract String tipoCliente();
@@ -16,6 +32,9 @@ public abstract class Cliente {
 	 * @param nif
 	 * @param email
 	 */
+	public Cliente() {
+		
+	}
 	public Cliente(String nombre, String domicilio, String nif, String email) {
 		super();
 		this.nombre = nombre;

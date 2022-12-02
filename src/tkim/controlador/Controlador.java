@@ -7,16 +7,18 @@ import tkim.modelo.Articulo;
 import tkim.modelo.Cliente;
 
 import tkim.modelo.LanzarArticuloDAO;
+import tkim.modelo.LanzarClienteDAO;
 import tkim.modelo.Pedido;
 
 public class Controlador {
 	
 	
 	LanzarArticuloDAO lad = new LanzarArticuloDAO();
+	LanzarClienteDAO lcd = new LanzarClienteDAO();
 	
 	public String addCliente(String nombre, String domi, String nif, String mail, String tipoCliente) {
 		try {
-			return null;
+			return lcd.save(nif, nombre, domi, mail, tipoCliente);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -32,12 +34,16 @@ public class Controlador {
 			
 		}
 		
-		return "hola";
+		return null;
 		
 	}
 	
 	public List<Articulo> mostrarArticulos(){
 		return lad.mostrarArticulos();
+	}
+	
+	public List<Cliente> mostrarClientesTodos(){
+		return lcd.mostrarClientesTodos();	
 	}
 	
 	public List<Cliente> mostrarClientesEstandar(){
@@ -54,9 +60,8 @@ public class Controlador {
 		
 	}
 	
-	public Boolean existeCliente(String nif) {
-		return null;
-		
+	public Boolean existeCliente(String nif) {	   
+		return lcd.existeCliente(nif);
 	}
 	
 	public Boolean existePedido(int codigoPedido) {

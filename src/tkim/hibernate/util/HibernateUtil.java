@@ -11,6 +11,8 @@ import org.hibernate.service.ServiceRegistry;
 import tkim.modelo.Articulo;
 //aqui las otras tablas, pedidos y clientes
 import tkim.modelo.Cliente;
+import tkim.modelo.ClienteEstandar;
+import tkim.modelo.ClientePremium;
 import tkim.modelo.Pedido;
 
 
@@ -43,6 +45,8 @@ public class HibernateUtil {
 				configuration.setProperties(settings);
 				configuration.addAnnotatedClass(Articulo.class);
 				configuration.addAnnotatedClass(Cliente.class);
+				configuration.addAnnotatedClass(ClienteEstandar.class);
+				configuration.addAnnotatedClass(ClientePremium.class);
 				configuration.addAnnotatedClass(Pedido.class);
 
 				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
