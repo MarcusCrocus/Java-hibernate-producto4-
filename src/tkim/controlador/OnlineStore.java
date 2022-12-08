@@ -6,8 +6,7 @@ import java.util.Scanner;
 
 import tkim.modelo.Articulo;
 import tkim.modelo.Cliente;
-import tkim.modelo.ClienteEstandar;
-import tkim.modelo.ClientePremium;
+import tkim.modelo.Exceptions;
 import tkim.modelo.Pedido;
 
 public class OnlineStore {
@@ -134,22 +133,33 @@ public class OnlineStore {
 				gastosEnvio = teclado.nextLine();
 			} while (!esFloat(gastosEnvio));
 
-			String tiempoPreparacion;
-			do {
-				System.out.println("Tiempo de preparacion: ");
-				tiempoPreparacion = teclado.nextLine();
-			} while (!esInteger(tiempoPreparacion));
+			System.out.println("Tiempo de preparacion EN MINUTOS: ");
+			boolean prep = true;
+			int tiempoPreparacion;
+            do{
+                tiempoPreparacion = teclado.nextInt();
+                try{
 
-			
-			if (precioVenta.contains(",")) {
-				precioVenta = precioVenta.replace(",", ".");
-			}
-			
-			if (gastosEnvio.contains(",")) {
-				gastosEnvio = gastosEnvio.replace(",", ".");
-			}
-			
-			System.out.println(contro.addArticulo(codigo, descripcion, Float.parseFloat(precioVenta), Float.parseFloat(gastosEnvio), Integer.parseInt(tiempoPreparacion)));
+                    if (tiempoPreparacion < 120){
+                        throw new Exceptions("El tiempo de preparación no puede ser inferior a 120min. Vuelve a introducirlo:");
+
+                    } else {
+                    	if (precioVenta.contains(",")) {
+                    		precioVenta = precioVenta.replace(",", ".");
+            			}
+                    	if (gastosEnvio.contains(",")) {
+                    		gastosEnvio = gastosEnvio.replace(",", ".");
+            			}
+                        System.out.println(contro.addArticulo(codigo, descripcion, Float.parseFloat(precioVenta), Float.parseFloat(gastosEnvio), tiempoPreparacion));
+                        prep = false;
+                     }
+
+                } catch (Exceptions e) {
+                    System.out.println(e.getMessage());
+                }
+
+            } while(prep);
+
 			System.out.println("");
 			pausar();
 		}
@@ -197,7 +207,25 @@ public class OnlineStore {
 			String domicilio = teclado.nextLine();
 
 			System.out.println("Email: ");
-			String email = teclado.nextLine();
+			String email;
+	        boolean bool = true;
+
+	        do{
+	              email = teclado.nextLine();
+	            try{
+
+	                if (!email.contains("@")){
+	                    throw new Exceptions("El email debe contener @. Vuelve a introducir su email:");
+
+	                } else {
+	                    System.out.println("El email ha sido aceptado");
+	                    bool = false;}
+
+	            } catch (Exceptions e) {
+	                System.out.println(e.getMessage());
+	            }
+
+	        } while(bool);
 
 			String tipoCliente;
 			System.out.println("Escoge el tipo de cliente: (1) Estandar (2) Premium");
@@ -279,9 +307,9 @@ public class OnlineStore {
 	 */
 	void addPedido() {
 
-		String numeroClientes = "0";
-		String numeroArticulos = "0";
-		String cli = "";
+		String nifClientes = "";
+		String codigoArticulos = "";
+		String nif = "";
 		String art = "";
 		
 		String numeroPedido;
@@ -295,39 +323,64 @@ public class OnlineStore {
 			addPedido();
 		} else {
 			System.out.println("Unidades: ");
-			int unidadesPedido = Integer.parseInt(teclado.nextLine());
+			  int unidadesPedido ;
+
+		        boolean unid = true;
+
+		        do{
+		             unidadesPedido = Integer.parseInt(teclado.nextLine());
+		            try{
+
+		                if (unidadesPedido <= 0 || unidadesPedido > 10){
+		                    throw new Exceptions("El numero de unidades debe ser superior a 0 e inferior a 10. Vuelve a introducirlo:");
+
+		                } else {
+		                    System.out.println("El numero de unidades ha sido aceptado");
+		                    unid = false;}
+
+		            } catch (Exceptions e) {
+		                System.out.println(e.getMessage());
+		            }
+
+		        } while(unid);
 
 			System.out.println("Escoge el cliente del pedido.");
 			System.out.println("");
 			// Aqui llamaremos al controlador para que nos devuelva la lista de clientes y
 			// listarlos
-			/*for (int i = 0; i < contro.datos.getClientes().getDato().size(); i++) {
-				System.out.println(i + 1 + ". " + contro.datos.getClientes().getDato().get(i).getNombre() + "\n");
-				numeroClientes += String.valueOf(i + 1) + ",";
-			}*/
+			List <Cliente> clientes = contro.mostrarClientesTodos();
+			for (Cliente cliente : clientes) {
+				System.out.println("nif: "+cliente.getNif()+" nombre: "+cliente.getNombre()+" mail: "+cliente.getEmail());
+				nifClientes += cliente.getNif() + ",";
+			}
 
 			System.out.println("");
 			do {
-				System.out.println("Elige una opci�n (" + numeroClientes.substring(1) + "): ");
-				cli = teclado.nextLine();
-			} while (!numeroClientes.contains(cli));
+				System.out.println("Elige un nif de cliente (" + nifClientes + "): ");
+				nif = teclado.nextLine();
+			} while (!nifClientes.contains(nif+","));
 
 			System.out.println("Escoge el articulo del pedido.");
 			System.out.println("");
-			// Aqui llamaremos al controlador para que nos devuelva la lista de clientes y
+			// Aqui llamaremos al controlador para que nos devuelva la lista de articulos y
 			// listarlos
-			/*for (int i = 0; i < contro.datos.getArticulos().getDato().size(); i++) {
-				System.out.println(i + 1 + ". " + contro.datos.getArticulos().getDato().get(i).getDescripcion() + "\n");
-				numeroArticulos += String.valueOf(i + 1) + ",";
+			List <Articulo> articulos = contro.mostrarArticulos();
+			for (Articulo articulo : articulos) {
+				System.out.println("Codigo: "+articulo.getCodigo()+" descripcion: "+articulo.getDescripcion());
+				codigoArticulos += articulo.getCodigo() + ",";
+			}
+			/*for (int i = 0; i < articulos.size(); i++) {
+				System.out.println(i + 1 + ". " + articulos.get(i) + "\n");
+				codigoArticulos += String.valueOf(i + 1) + ",";
 			}*/
 
 			System.out.println("");
 			do {
-				System.out.println("Elige una opci�n (" + numeroArticulos.substring(1) + "): ");
+				System.out.println("Elige un codigo de articulo (" + codigoArticulos + "): ");
 				art = teclado.nextLine();
-			} while (!numeroArticulos.contains(cli));
+			} while (!codigoArticulos.contains(art+","));
 
-			//System.out.println(contro.addPedido(Integer.parseInt(numeroPedido), unidadesPedido, LocalDateTime.now(), cli, art));
+			System.out.println(contro.addPedido(Integer.parseInt(numeroPedido), unidadesPedido, LocalDateTime.now(), nif, art));
 			System.out.println("");
 			pausar();
 		}

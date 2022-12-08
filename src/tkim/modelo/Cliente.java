@@ -21,6 +21,12 @@ public abstract class Cliente {
 	private String nif;
 	@Column
 	private String email;
+	@Column(insertable=false, updatable=false)
+	private String tipo_cliente;
+	@Column
+	private float cuota_anual;
+	@Column
+	private float descuento_envio;
 	
 	public abstract String tipoCliente();
 	public abstract float calcAnual();
@@ -35,12 +41,13 @@ public abstract class Cliente {
 	public Cliente() {
 		
 	}
-	public Cliente(String nombre, String domicilio, String nif, String email) {
+	public Cliente(String nombre, String domicilio, String nif, String email, String tipoCliente) {
 		super();
 		this.nombre = nombre;
 		this.domicilio = domicilio;
 		this.nif = nif;
 		this.email = email;
+		this.tipo_cliente = tipoCliente;
 	}
 	/**
 	 * @return the nombre
@@ -89,6 +96,27 @@ public abstract class Cliente {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getTipo_cliente() {
+		return tipo_cliente;
+	}
+	public void setTipo_cliente(String tipo_cliente) {
+		this.tipo_cliente = tipo_cliente;
+	}
+	
+	
+	public float getCuota_anual() {
+		return cuota_anual;
+	}
+	public void setCuota_anual(float cuota_anual) {
+		this.cuota_anual = cuota_anual;
+	}
+	public float getDescuento_envio() {
+		return descuento_envio;
+	}
+	public void setDescuento_envio(float descuento_envio) {
+		this.descuento_envio = descuento_envio;
 	}
 	@Override
 	public String toString() {

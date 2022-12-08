@@ -10,8 +10,8 @@ public class ClienteEstandar extends Cliente{
 	public ClienteEstandar() {
 		
 	}
-	public ClienteEstandar(String nombre, String domicilio, String nif, String email) {
-		super(nombre, domicilio, nif, email);	
+	public ClienteEstandar(String nombre, String domicilio, String nif, String email, String tipo_cliente) {
+		super(nombre, domicilio, nif, email, tipo_cliente);
 	}
 
 	@Override
@@ -35,9 +35,5 @@ public class ClienteEstandar extends Cliente{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	
-	
-	
 
 }

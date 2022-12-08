@@ -1,17 +1,28 @@
 package tkim.modelo;
 
 import java.time.LocalDateTime;
-import tkim.modelo.Cliente;
-import tkim.modelo.Articulo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Pedidos")
 public class Pedido {
 	
-	private int numeroPedido;
+	@Id
+	private int numero_pedido;
+	@Column(name="unidades_pedido")
 	private int unidadesPedido;
+	@Column(name="fecha_hora_pedido")
 	private LocalDateTime fechaHoraPedido;
+	@Column(name="total_pedido")
 	private float totalPedido;
-	private Cliente cliente;
-	private Articulo articulo;
+	@Column(name="cliente_fk")
+	private String cliente;
+	@Column(name="articulo_fk")
+	private String articulo;
 	/**
 	 * @param numeroPedido
 	 * @param unidadesPedido
@@ -20,22 +31,26 @@ public class Pedido {
 	 * @param cliente
 	 * @param articulo
 	 */
+	
+	public Pedido() {
+		
+	}
+	
 	public Pedido(int numeroPedido, int unidadesPedido, LocalDateTime fechaHoraPedido, float totalPedido,
-			Cliente cliente, Articulo articulo) {
+			String cliente, String articulo) {
 		super();
-		this.numeroPedido = numeroPedido;
+		this.numero_pedido = numeroPedido;
 		this.unidadesPedido = unidadesPedido;
 		this.fechaHoraPedido = fechaHoraPedido;
 		this.totalPedido = totalPedido;
 		this.cliente = cliente;
 		this.articulo = articulo;
 	}
-	//comentario
-	public int getNumeroPedido() {
-		return numeroPedido;
+	public int getNumero_pedido() {
+		return numero_pedido;
 	}
-	public void setNumeroPedido(int numeroPedido) {
-		this.numeroPedido = numeroPedido;
+	public void setNumero_pedido(int numero_pedido) {
+		this.numero_pedido = numero_pedido;
 	}
 	public int getUnidadesPedido() {
 		return unidadesPedido;
@@ -55,23 +70,16 @@ public class Pedido {
 	public void setTotalPedido(float totalPedido) {
 		this.totalPedido = totalPedido;
 	}
-	public Cliente getCliente() {
+	public String getCliente() {
 		return cliente;
 	}
-	public void setCliente(Cliente cliente) {
+	public void setCliente(String cliente) {
 		this.cliente = cliente;
 	}
-	public Articulo getArticulo() {
+	public String getArticulo() {
 		return articulo;
 	}
-	public void setArticulo(Articulo articulo) {
+	public void setArticulo(String articulo) {
 		this.articulo = articulo;
 	}
-	
-	@Override
-	public String toString() {
-		return "Pedido [numeroPedido=" + numeroPedido + ", unidadesPedido=" + unidadesPedido + ", fechaHoraPedido="
-				+ fechaHoraPedido + ", totalPedido=" + totalPedido + ", cliente=" + cliente + ", articulo=" + articulo
-				+ "]";
-	}	
 }

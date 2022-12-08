@@ -29,5 +29,10 @@ public class LanzarArticuloDAO {
 		IArticuloDAO dao = (IArticuloDAO) FactoryDAOs.getDAO("Articulo");
 		return dao.existeArticulo(codigo);
 	}
+	
+	public Articulo buscarArticulo(String codigoArticulo) {
+		IArticuloDAO dao = (IArticuloDAO) FactoryDAOs.getDAO("Articulo");
+		return dao.buscarArticulo(codigoArticulo);
+	}
 
 }

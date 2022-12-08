@@ -79,4 +79,24 @@ public class ArticuloDAO implements IArticuloDAO {
 		}
 	}
 
+
+	@Override
+	public Articulo buscarArticulo(String codigoArticulo) {
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Articulo> cr = cb.createQuery(Articulo.class);
+			Root<Articulo> root = cr.from(Articulo.class);
+			cr.select(root);
+			cr.select(root).where(cb.equal(root.get("codigo"), codigoArticulo));
+			Query query = session.createQuery(cr);
+			List<Articulo> articulos = query.getResultList();
+			Articulo articulo = articulos.get(0);
+			return articulo;
+		} catch (RuntimeException re) {
+			System.out.println("fallo al mostrar los articulos." + re);
+			return null;
+		}
+	}
+
 }

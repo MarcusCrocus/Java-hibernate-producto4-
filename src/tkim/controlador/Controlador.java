@@ -8,6 +8,7 @@ import tkim.modelo.Cliente;
 
 import tkim.modelo.LanzarArticuloDAO;
 import tkim.modelo.LanzarClienteDAO;
+import tkim.modelo.LanzarPedidoDAO;
 import tkim.modelo.Pedido;
 
 public class Controlador {
@@ -15,6 +16,7 @@ public class Controlador {
 	
 	LanzarArticuloDAO lad = new LanzarArticuloDAO();
 	LanzarClienteDAO lcd = new LanzarClienteDAO();
+	LanzarPedidoDAO lpd = new LanzarPedidoDAO();
 	
 	public String addCliente(String nombre, String domi, String nif, String mail, String tipoCliente) {
 		try {
@@ -38,6 +40,20 @@ public class Controlador {
 		
 	}
 	
+	public String addPedido(int numeroPedido, int unidadesPedido, LocalDateTime fecha_hora_pedido, String cli, String art) {
+		try {
+			Cliente cliente = lcd.buscarCliente(cli);
+			Articulo articulo = lad.buscarArticulo(art);
+			return lpd.addPedido(numeroPedido, unidadesPedido, fecha_hora_pedido, cliente, articulo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return null;
+		
+	}
+	
 	public List<Articulo> mostrarArticulos(){
 		return lad.mostrarArticulos();
 	}
@@ -47,11 +63,11 @@ public class Controlador {
 	}
 	
 	public List<Cliente> mostrarClientesEstandar(){
-		return null;
+		return lcd.mostrarClientesXtipo("Cliente Estandar");
 	}
 	
 	public List<Cliente> mostrarClientesPremium(){
-		return null;
+		return lcd.mostrarClientesXtipo("Cliente Premium");
 		
 	}
 	
@@ -65,12 +81,12 @@ public class Controlador {
 	}
 	
 	public Boolean existePedido(int codigoPedido) {
-		return null;
+		return lpd.existePedido(codigoPedido);
 		
 	}
 	
 	public String eliminarPedido(int codigoPedido) {
-		return null;
+		return lpd.eliminarPedido(codigoPedido);
 	}
 	
 	public List<Pedido> mostrarPedEnviados(int numeroOrdenArray) {

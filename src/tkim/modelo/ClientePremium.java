@@ -10,9 +10,8 @@ public class ClientePremium extends Cliente {
 	public ClientePremium() {
 		
 	}
-	public ClientePremium(String nombre, String domicilio, String nif, String email) {
-		super(nombre, domicilio, nif, email);
-		
+	public ClientePremium(String nombre, String domicilio, String nif, String email, String tipo_cliente) {
+		super(nombre, domicilio, nif, email, tipo_cliente);
 	}
 
 	@Override
@@ -32,6 +31,4 @@ public class ClientePremium extends Cliente {
 		// TODO Auto-generated method stub
 		return 20;
 	}
-	
-	
 }
