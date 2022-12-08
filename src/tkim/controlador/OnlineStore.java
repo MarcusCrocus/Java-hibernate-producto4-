@@ -30,16 +30,16 @@ public class OnlineStore {
 		String opcio;
 		do {
 			System.out.println(" 1. Añadir artículo");
-			System.out.println(" 2. Mostrar art�culos");
+			System.out.println(" 2. Mostrar artículos");
 			System.out.println(" 3. Añadir clientes");
 			System.out.println(" 4. Mostrar clientes");
 			System.out.println(" 5. Mostrar clientes estandar");
 			System.out.println(" 6. Mostrar clientes premium");
 			System.out.println(" 7. Crear pedido");
 			System.out.println(" 8. Eliminar pedido");
-			System.out.println(" 9. Mostrar pedidos cliente pendientes de env�o");
+			System.out.println(" 9. Mostrar pedidos cliente pendientes de envío");
 			System.out.println("10. Mostrar pedidos cliente enviados");
-			System.out.println(" 0. Salir de la aplicaci�n");
+			System.out.println(" 0. Salir de la aplicación");
 			opcio = pedirOpcioMenu();
 			switch (opcio) {
 			case "1":
