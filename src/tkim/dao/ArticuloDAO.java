@@ -90,8 +90,7 @@ public class ArticuloDAO implements IArticuloDAO {
 			cr.select(root);
 			cr.select(root).where(cb.equal(root.get("codigo"), codigoArticulo));
 			Query query = session.createQuery(cr);
-			List<Articulo> articulos = query.getResultList();
-			Articulo articulo = articulos.get(0);
+			Articulo articulo = (Articulo) query.getSingleResult();
 			return articulo;
 		} catch (RuntimeException re) {
 			System.out.println("fallo al mostrar los articulos." + re);

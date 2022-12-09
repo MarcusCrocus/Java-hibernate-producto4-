@@ -13,5 +13,7 @@ public Boolean existePedido(Integer codigo);
 	public String eliminarPedido(int numPedido);
 	public List<Pedido> pedidosEnviados(String nif);
 	public List<Pedido> pedidosPendientes(String nif);
+	public int devolverTiempoPreparacion(String codigoArticulo);
+	public Pedido devolverPedido(int numeroPedido);
 
 }

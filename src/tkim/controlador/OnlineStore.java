@@ -118,7 +118,7 @@ public class OnlineStore {
 			addArticulo();
 		} else {
 
-			System.out.println("Descripci�n: ");
+			System.out.println("Descripción: ");
 			String descripcion = teclado.nextLine();
 			
 			String precioVenta;
