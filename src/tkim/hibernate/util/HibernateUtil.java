@@ -31,11 +31,20 @@ public class HibernateUtil {
 				Configuration configuration = new Configuration();
 				// Creamos el archivo de propiedades de conexion a BBDD
 				Properties settings = new Properties();
-				settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+				/*settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
 				settings.put(Environment.URL, "jdbc:mysql://localhost:2211/poo_uoc");
 				settings.put(Environment.USER, "usuario_uoc");
 				settings.put(Environment.PASS, "4321");
 				settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
+				//settings.put(Environment.SHOW_SQL, "true");
+
+				settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");*/
+				
+				settings.put(Environment.DRIVER, "oracle.jdbc.OracleDriver");
+				settings.put(Environment.URL, "jdbc:oracle:thin:@localhost:1521:orcl");
+				settings.put(Environment.USER, "drugo");
+				settings.put(Environment.PASS, "4321");
+				settings.put(Environment.DIALECT, "org.hibernate.dialect.Oracle8iDialect");
 				//settings.put(Environment.SHOW_SQL, "true");
 
 				settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
