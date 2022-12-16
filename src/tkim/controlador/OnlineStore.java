@@ -3,6 +3,7 @@ package tkim.controlador;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 import tkim.modelo.Articulo;
 import tkim.modelo.Cliente;
@@ -16,7 +17,7 @@ public class OnlineStore {
 
 	public static void main(String[] args) throws Exception {
 		OnlineStore os = new OnlineStore();
-		os.cargarDatos();
+		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
 		os.inicio();
 	}
 
@@ -95,7 +96,7 @@ public class OnlineStore {
 	String pedirOpcioMenu() {
 		String resp;
 		teclado = new Scanner(System.in);
-		System.out.print("Elige una opci�n (1,2,3,4,5,6,7,8,9,10 o 0 (Salir)): ");
+		System.out.print("Elige una opción (1,2,3,4,5,6,7,8,9,10 o 0 (Salir)): ");
 		resp = teclado.nextLine();
 		if (resp.isEmpty()) {
 			resp = " ";
@@ -114,7 +115,7 @@ public class OnlineStore {
 		System.out.println("Codigo: ");
 		String codigo = teclado.nextLine();
 		if (contro.existeArticulo(codigo)) {
-			System.out.println("El codigo " + codigo + " de articulo ya existe.");
+			System.out.println("El codigo " + codigo + " de artículo ya existe.");
 			addArticulo();
 		} else {
 
@@ -133,7 +134,7 @@ public class OnlineStore {
 				gastosEnvio = teclado.nextLine();
 			} while (!esFloat(gastosEnvio));
 
-			System.out.println("Tiempo de preparacion EN MINUTOS: ");
+			System.out.println("Tiempo de preparación EN MINUTOS: ");
 			boolean prep = true;
 			int tiempoPreparacion;
             do{
@@ -175,14 +176,14 @@ public class OnlineStore {
 		List<Articulo> articulos = contro.mostrarArticulos();
 		if (!articulos.isEmpty()) {
 			for (Articulo articulo : articulos) {
-				System.out.print("- Codigo: " + articulo.getCodigo() + " ");
-				System.out.print("Descripcion: " + articulo.getDescripcion() + " ");
+				System.out.print("- Código: " + articulo.getCodigo() + " ");
+				System.out.print("Descripción: " + articulo.getDescripcion() + " ");
 				System.out.print("Precio de venta: " + articulo.getPrecioVenta() + " ");
 				System.out.print("Gastos de envio: " + articulo.getGastosEnvio() + " ");
 				System.out.print("Tiempo de preparacion: " + articulo.getTiempoPreparacion() + "\n");
 			}
 		} else {
-			System.out.println("Ha habido algun fallo en a la hora de recuperar los datos");
+			System.out.println("Ha habido algun fallo a la hora de recuperar los datos");
 		}
 		pausar();
 	}
@@ -314,12 +315,12 @@ public class OnlineStore {
 		
 		String numeroPedido;
 		do {
-			System.out.println("Numero de pedido: ");
+			System.out.println("Número de pedido: ");
 			numeroPedido = teclado.nextLine();
 		} while (!esInteger(numeroPedido));
 		
 		if (contro.existePedido(Integer.parseInt(numeroPedido))) {
-			System.out.println("Ya existe un pedido con ese codigo");
+			System.out.println("Ya existe un pedido con ese código");
 			addPedido();
 		} else {
 			System.out.println("Unidades: ");
@@ -332,10 +333,10 @@ public class OnlineStore {
 		            try{
 
 		                if (unidadesPedido <= 0 || unidadesPedido > 10){
-		                    throw new Exceptions("El numero de unidades debe ser superior a 0 e inferior a 10. Vuelve a introducirlo:");
+		                    throw new Exceptions("El número de unidades debe ser superior a 0 e inferior a 10. Vuelve a introducirlo:");
 
 		                } else {
-		                    System.out.println("El numero de unidades ha sido aceptado");
+		                    System.out.println("El número de unidades ha sido aceptado");
 		                    unid = false;}
 
 		            } catch (Exceptions e) {
@@ -360,23 +361,19 @@ public class OnlineStore {
 				nif = teclado.nextLine();
 			} while (!nifClientes.contains(nif+","));
 
-			System.out.println("Escoge el articulo del pedido.");
+			System.out.println("Escoge el artículo del pedido.");
 			System.out.println("");
 			// Aqui llamaremos al controlador para que nos devuelva la lista de articulos y
 			// listarlos
 			List <Articulo> articulos = contro.mostrarArticulos();
 			for (Articulo articulo : articulos) {
-				System.out.println("Codigo: "+articulo.getCodigo()+" descripcion: "+articulo.getDescripcion());
+				System.out.println("Código: "+articulo.getCodigo()+" descripción: "+articulo.getDescripcion());
 				codigoArticulos += articulo.getCodigo() + ",";
 			}
-			/*for (int i = 0; i < articulos.size(); i++) {
-				System.out.println(i + 1 + ". " + articulos.get(i) + "\n");
-				codigoArticulos += String.valueOf(i + 1) + ",";
-			}*/
 
 			System.out.println("");
 			do {
-				System.out.println("Elige un codigo de articulo (" + codigoArticulos + "): ");
+				System.out.println("Elige un código de artículo (" + codigoArticulos + "): ");
 				art = teclado.nextLine();
 			} while (!codigoArticulos.contains(art+","));
 
@@ -393,7 +390,7 @@ public class OnlineStore {
 		// Enviaremos al controlador el pedido que queremos eliminar
 		String numeroPedido;
 		do {
-			System.out.println("Numero de pedido: ");
+			System.out.println("Número de pedido: ");
 			numeroPedido = teclado.nextLine();
 		} while (!esInteger(numeroPedido));
 		
@@ -508,7 +505,7 @@ public class OnlineStore {
 			Integer.parseInt(numero);
 			return true;
 		} catch (NumberFormatException err) {
-			System.out.println("El caracter debe ser numerico, introduce un numero");
+			System.out.println("El carácter debe ser numérico, introduce un número");
 			return false;
 		}
 	}
@@ -527,17 +524,8 @@ public class OnlineStore {
 			Float.parseFloat(numero);
 			return true;
 		} catch (NumberFormatException err) {
-			System.out.println("El caracter debe ser numerico, introduce un numero");
+			System.out.println("El carácter debe ser númerico, introduce un número");
 			return false;
 		}
-	}
-
-	/**
-	 * metodo donde cargamos datos iniciales de tiendas, proveedores, productos,
-	 * cliente y tickets
-	 */
-	void cargarDatos() {
-
-		
 	}
 }

@@ -22,7 +22,6 @@ import tkim.modelo.Cliente;
 import tkim.modelo.Pedido;
 import tkim.modelo.Pedido;
 
-@SuppressWarnings("unused")
 public class PedidoDAO implements IPedidoDAO {
 
 	Transaction transaction = null;

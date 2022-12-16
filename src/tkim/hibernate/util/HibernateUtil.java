@@ -31,14 +31,18 @@ public class HibernateUtil {
 				Configuration configuration = new Configuration();
 				// Creamos el archivo de propiedades de conexion a BBDD
 				Properties settings = new Properties();
+
 				settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
 				settings.put(Environment.URL, "jdbc:mysql://localhost/poo_uoc");
+
 				settings.put(Environment.USER, "usuario_uoc");
 				settings.put(Environment.PASS, "4321");
 				settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
 				//settings.put(Environment.SHOW_SQL, "true");
 
 				settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+				
+			
 
 				//Ponemos todas las clases que hemos creado para obtener los datos de
 				//sus respectivas tablas
