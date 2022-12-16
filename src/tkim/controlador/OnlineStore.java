@@ -406,8 +406,8 @@ public class OnlineStore {
 		// Aqui llamaremos al controlador para que nos devuelva la lista de pedidos con
 		// el filtro de enviados
 		// y lo mostraremos
-		String numeroClientes = "0";
-		String cliente = "";
+		String nifClientes = "";
+		String nif = "";
 		System.out.println("Escoge un cliente:");
 		System.out.println("");
 
@@ -420,18 +420,29 @@ public class OnlineStore {
 		System.out.println("");
 
 		System.out.println("");
-		do {
-			System.out.println("Elige el cliente (" + numeroClientes.substring(1) + "): ");
-			cliente = teclado.nextLine();
-		} while (!numeroClientes.contains(cliente));
+		List <Cliente> clientes = contro.mostrarClientesTodos();
+		for (Cliente cliente : clientes) {
+			System.out.println("nif: "+cliente.getNif()+" nombre: "+cliente.getNombre()+" mail: "+cliente.getEmail());
+			nifClientes += cliente.getNif() + ",";
+		}
 
-		List<Pedido> pedidos = contro.mostrarPedEnviados(Integer.parseInt(cliente));
+		System.out.println("");
+		do {
+			System.out.println("Elige un nif de cliente (" + nifClientes + "): ");
+			nif = teclado.nextLine();
+		} while (!nifClientes.contains(nif+","));
+		
+		List<Pedido> pedidos = contro.mostrarPedEnviados(nif);
 		System.out.println("##########################################################################");
 		System.out.println("######################## PEDIDOS ENVIADOS ################################");
 		System.out.println("##########################################################################");
 		System.out.println("");
+		Cliente cli= contro.buscarCliente(nif);
+		System.out.println("Nif de cliente: " + cli.getNif()+","+ "Nombre del cliente: " +  cli.getNombre());
 		for (Pedido pedido : pedidos) {
-			System.out.println(pedido + "\n");
+			Articulo articulo = contro.buscarArticulo(pedido.getArticulo());
+			System.out.println("Numero pedido: "+pedido.getNumero_pedido() + ", Unidades pedido: "+pedido.getUnidadesPedido() + ", Total pedido: "+ pedido.getTotalPedido()+
+					", Codigo articulo: "+articulo.getCodigo() + ", Descripcion articulo: "+articulo.getDescripcion()+"\n");
 		}
 		System.out.println("");
 		System.out.println("##########################################################################");
