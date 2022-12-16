@@ -3,6 +3,8 @@ package tkim.dao;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -16,9 +18,11 @@ import org.hibernate.Transaction;
 
 import tkim.hibernate.util.HibernateUtil;
 import tkim.modelo.Articulo;
+import tkim.modelo.Cliente;
 import tkim.modelo.Pedido;
 import tkim.modelo.Pedido;
 
+@SuppressWarnings("unused")
 public class PedidoDAO implements IPedidoDAO {
 
 	Transaction transaction = null;
@@ -86,10 +90,10 @@ public class PedidoDAO implements IPedidoDAO {
 					Root<Pedido> p = delete.from(Pedido.class);
 					delete.where(cb.equal(p.get("numero_pedido"), numPedido));
 					int resultado = session.createQuery(delete).executeUpdate();
-					transaction.commit();
+					transaction.commit(); 
 					session.close();
 					return "El pedido se ha borrado correctamente";
-				} catch (RuntimeException re) {
+				} catch (RuntimeException re) { 
 					System.out.println(re);
 					return "fallo al borrar el pedido" + re;
 				}
@@ -104,8 +108,23 @@ public class PedidoDAO implements IPedidoDAO {
 
 	@Override
 	public List<Pedido> pedidosEnviados(String nif) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pedido> pedidosEnviados = new ArrayList<Pedido>();
+		List<Pedido>pedidoXcliente = devolverPedidosXCliente(nif);
+		
+		for (Pedido pedido : pedidoXcliente) {
+			int tiempoPreparacion = devolverTiempoPreparacion(pedido.getArticulo());
+			LocalDateTime localDateTime = pedido.getFechaHoraPedido().minusHours(1);
+			Duration duration = Duration.between(localDateTime, LocalDateTime.now());
+			long diff = Math.abs(duration.toMinutes());
+			boolean enviado_pendiente = tiempoPreparacion < diff;
+			
+			if(enviado_pendiente) {
+				pedidosEnviados.add(pedido);
+				
+			}
+		}	
+	
+		return pedidosEnviados;
 	}
 
 	@Override
@@ -156,4 +175,29 @@ public class PedidoDAO implements IPedidoDAO {
 			return null;
 		}
 	}
+	
+	// funcion devuelve pedido segun el nif
+	@Override
+	public List<Pedido> devolverPedidosXCliente(String nif) {
+		List<Pedido> pedidos = null;
+		try {
+
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Pedido> cr = cb.createQuery(Pedido.class);
+			Root<Pedido> root = cr.from(Pedido.class);
+			cr.select(root);
+			cr.select(root).where(cb.equal(root.get("cliente"), nif));
+			Query query = session.createQuery(cr);
+			pedidos = query.getResultList();		
+			
+			return pedidos;
+		} catch (RuntimeException re) {
+			System.out.println("fallo recuperar pedido." + re);
+			return null;
+		}
+	}
+	
+		
+
 }

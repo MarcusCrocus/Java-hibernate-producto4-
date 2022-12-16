@@ -32,7 +32,7 @@ public class HibernateUtil {
 				// Creamos el archivo de propiedades de conexion a BBDD
 				Properties settings = new Properties();
 				settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-				settings.put(Environment.URL, "jdbc:mysql://localhost:2211/poo_uoc");
+				settings.put(Environment.URL, "jdbc:mysql://localhost/poo_uoc");
 				settings.put(Environment.USER, "usuario_uoc");
 				settings.put(Environment.PASS, "4321");
 				settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");

@@ -89,13 +89,19 @@ public class Controlador {
 		return lpd.eliminarPedido(codigoPedido);
 	}
 	
-	public List<Pedido> mostrarPedEnviados(int numeroOrdenArray) {
-		return null;
+	public List<Pedido> mostrarPedEnviados(String nif) {
+		return lpd.mostrarPedidosEnviados(nif);
 	}
 	
 	public List<Pedido> mostrarPedPendientes(int numeroOrdenArray) {
 		return null;
 	}
 	
+	public Cliente buscarCliente(String nif) {
+		return lcd.buscarCliente(nif);
+	}
 	
+	public Articulo buscarArticulo(String codigoArticulo) {
+		return lad.buscarArticulo(codigoArticulo);
+	}
 }

@@ -82,4 +82,13 @@ public class Pedido {
 	public void setArticulo(String articulo) {
 		this.articulo = articulo;
 	}
+
+	@Override
+	public String toString() {
+		return "Pedido [getNumero_pedido()=" + getNumero_pedido() + ", getUnidadesPedido()=" + getUnidadesPedido()
+				+ ", getFechaHoraPedido()=" + getFechaHoraPedido() + ", getTotalPedido()=" + getTotalPedido()
+				+ ", getCliente()=" + getCliente() + ", getArticulo()=" + getArticulo() + "]";
+	}
+	
+	
 }
