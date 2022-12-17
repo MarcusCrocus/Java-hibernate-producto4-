@@ -153,6 +153,7 @@ public class OnlineStore {
             			}
                         System.out.println(contro.addArticulo(codigo, descripcion, Float.parseFloat(precioVenta), Float.parseFloat(gastosEnvio), tiempoPreparacion));
                         prep = false;
+                        pausar();
                      }
 
                 } catch (Exceptions e) {
@@ -162,7 +163,7 @@ public class OnlineStore {
             } while(prep);
 
 			System.out.println("");
-			pausar();
+			
 		}
 	}
 
@@ -439,6 +440,7 @@ public class OnlineStore {
 		System.out.println("");
 		Cliente cli= contro.buscarCliente(nif);
 		System.out.println("Nif de cliente: " + cli.getNif()+","+ "Nombre del cliente: " +  cli.getNombre());
+		System.out.println("");
 		for (Pedido pedido : pedidos) {
 			Articulo articulo = contro.buscarArticulo(pedido.getArticulo());
 			System.out.println("Numero pedido: "+pedido.getNumero_pedido() + ", Unidades pedido: "+pedido.getUnidadesPedido() + ", Total pedido: "+ pedido.getTotalPedido()+
@@ -459,32 +461,39 @@ public class OnlineStore {
 		// Aqui llamaremos al controlador para que nos devuelva la lista de pedidos con
 		// el filtro de pendientes
 		// y lo mostraremos
-		String numeroClientes = "0";
-		String cliente = "";
+		String nifClientes = "";
+		String nif = "";
 		System.out.println("Escoge un cliente:");
 		System.out.println("");
 
 		// Aqui llamaremos al controlador para que nos devuelva la lista de clientes y
 		// listarlos
-		/*for (int i = 0; i < contro.datos.getClientes().getDato().size(); i++) {
-			System.out.println(i + 1 + ". " + contro.datos.getClientes().getDato().get(i).getNombre() + "\n");
-			numeroClientes += String.valueOf(i + 1) + ",";
-		}*/
 		System.out.println("");
+
+		List <Cliente> clientes = contro.mostrarClientesTodos();
+		for (Cliente cliente : clientes) {
+			System.out.println("nif: "+cliente.getNif()+" nombre: "+cliente.getNombre()+" mail: "+cliente.getEmail());
+			nifClientes += cliente.getNif() + ",";
+		}
 
 		System.out.println("");
 		do {
-			System.out.println("Elige un cliente (" + numeroClientes.substring(1) + "): ");
-			cliente = teclado.nextLine();
-		} while (!numeroClientes.contains(cliente));
+			System.out.println("Elige un nif de cliente (" + nifClientes + "): ");
+			nif = teclado.nextLine();
+		} while (!nifClientes.contains(nif+","));
 
-		List<Pedido> pedidos = contro.mostrarPedPendientes(Integer.parseInt(cliente));
+		List<Pedido> pedidos = contro.mostrarPedPendientes(nif);
 		System.out.println("##########################################################################");
 		System.out.println("######################## PEDIDOS PENDIENTES ##############################");
 		System.out.println("##########################################################################");
 		System.out.println("");
+		Cliente cli= contro.buscarCliente(nif);
+		System.out.println("Nif de cliente: " + cli.getNif()+","+ "Nombre del cliente: " +  cli.getNombre());
+		System.out.println("");
 		for (Pedido pedido : pedidos) {
-			System.out.println(pedido + "\n");
+			Articulo articulo = contro.buscarArticulo(pedido.getArticulo());
+			System.out.println("Numero pedido: "+pedido.getNumero_pedido() + ", Unidades pedido: "+pedido.getUnidadesPedido() + ", Total pedido: "+ pedido.getTotalPedido()+
+					", Codigo articulo: "+articulo.getCodigo() + ", Descripcion articulo: "+articulo.getDescripcion()+"\n");
 		}
 		System.out.println("");
 		System.out.println("##########################################################################");

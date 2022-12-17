@@ -128,8 +128,23 @@ public class PedidoDAO implements IPedidoDAO {
 
 	@Override
 	public List<Pedido> pedidosPendientes(String nif) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pedido> pedidosPendientes = new ArrayList<Pedido>();
+		List<Pedido>pedidoXcliente = devolverPedidosXCliente(nif);
+		
+		for (Pedido pedido : pedidoXcliente) {
+			int tiempoPreparacion = devolverTiempoPreparacion(pedido.getArticulo());
+			LocalDateTime localDateTime = pedido.getFechaHoraPedido().minusHours(1);
+			Duration duration = Duration.between(localDateTime, LocalDateTime.now());
+			long diff = Math.abs(duration.toMinutes());
+			boolean enviado_pendiente = tiempoPreparacion > diff;
+			
+			if(enviado_pendiente) {
+				pedidosPendientes.add(pedido);
+				
+			}
+		}	
+	
+		return pedidosPendientes;
 	}
 
 	@Override
@@ -170,7 +185,7 @@ public class PedidoDAO implements IPedidoDAO {
 			
 			return pedido;
 		} catch (RuntimeException re) {
-			System.out.println("fallo recuperar pedido." + re);
+			//System.out.println("fallo recuperar pedido." + re);
 			return null;
 		}
 	}

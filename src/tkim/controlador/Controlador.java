@@ -93,8 +93,8 @@ public class Controlador {
 		return lpd.mostrarPedidosEnviados(nif);
 	}
 	
-	public List<Pedido> mostrarPedPendientes(int numeroOrdenArray) {
-		return null;
+	public List<Pedido> mostrarPedPendientes(String nif) {
+		return lpd.mostrarPedidosPendiente(nif);
 	}
 	
 	public Cliente buscarCliente(String nif) {

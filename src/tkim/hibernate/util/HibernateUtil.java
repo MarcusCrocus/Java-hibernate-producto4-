@@ -34,7 +34,7 @@ public class HibernateUtil {
 
 
 				settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-				settings.put(Environment.URL, "jdbc:mysql://localhost/poo_uoc");
+				settings.put(Environment.URL, "jdbc:mysql://localhost:2211/poo_uoc");
 
 				settings.put(Environment.USER, "usuario_uoc");
 				settings.put(Environment.PASS, "4321");
