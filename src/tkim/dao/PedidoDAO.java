@@ -1,10 +1,8 @@
 package tkim.dao;
 
-import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -18,9 +16,8 @@ import org.hibernate.Transaction;
 
 import tkim.hibernate.util.HibernateUtil;
 import tkim.modelo.Articulo;
-import tkim.modelo.Cliente;
 import tkim.modelo.Pedido;
-import tkim.modelo.Pedido;
+
 
 public class PedidoDAO implements IPedidoDAO {
 
@@ -88,7 +85,7 @@ public class PedidoDAO implements IPedidoDAO {
 					CriteriaDelete<Pedido> delete = cb.createCriteriaDelete(Pedido.class);
 					Root<Pedido> p = delete.from(Pedido.class);
 					delete.where(cb.equal(p.get("numero_pedido"), numPedido));
-					int resultado = session.createQuery(delete).executeUpdate();
+					session.createQuery(delete).executeUpdate();
 					transaction.commit(); 
 					session.close();
 					return "El pedido se ha borrado correctamente";
@@ -191,6 +188,7 @@ public class PedidoDAO implements IPedidoDAO {
 	}
 	
 	// funcion devuelve pedido segun el nif
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pedido> devolverPedidosXCliente(String nif) {
 		List<Pedido> pedidos = null;

@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import tkim.hibernate.util.HibernateUtil;
-import tkim.modelo.Articulo;
 import tkim.modelo.Cliente;
 
 public class ClienteDAO implements IClienteDAO {
@@ -91,6 +90,7 @@ public class ClienteDAO implements IClienteDAO {
 				cr.select(root);
 				cr.select(root).where(cb.equal(root.get("tipo_cliente"), tipoCliente));
 				Query query = session.createQuery(cr);
+				@SuppressWarnings("unchecked")
 				List<Cliente> clientes = query.getResultList();
 				//Cerramos la sesion
 				session.close();
@@ -133,6 +133,7 @@ public class ClienteDAO implements IClienteDAO {
 			cr.select(root);
 			cr.select(root).where(cb.equal(root.get("nif"), codigo_cliente));
 			Query query = session.createQuery(cr);
+			@SuppressWarnings("unchecked")
 			List<Cliente> clientes = query.getResultList();
 			Cliente cliente = clientes.get(0);
 			return cliente;

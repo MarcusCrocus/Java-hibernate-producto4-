@@ -446,6 +446,9 @@ public class OnlineStore {
 			System.out.println("Numero pedido: "+pedido.getNumero_pedido() + ", Unidades pedido: "+pedido.getUnidadesPedido() + ", Total pedido: "+ pedido.getTotalPedido()+
 					", Codigo articulo: "+articulo.getCodigo() + ", Descripcion articulo: "+articulo.getDescripcion()+"\n");
 		}
+		if (pedidos.isEmpty()) {
+			System.out.println("El cliente no tiene ningún pedido enviado");
+		}
 		System.out.println("");
 		System.out.println("##########################################################################");
 		System.out.println("######################## PEDIDOS ENVIADOS ################################");
@@ -494,6 +497,9 @@ public class OnlineStore {
 			Articulo articulo = contro.buscarArticulo(pedido.getArticulo());
 			System.out.println("Numero pedido: "+pedido.getNumero_pedido() + ", Unidades pedido: "+pedido.getUnidadesPedido() + ", Total pedido: "+ pedido.getTotalPedido()+
 					", Codigo articulo: "+articulo.getCodigo() + ", Descripcion articulo: "+articulo.getDescripcion()+"\n");
+		}
+		if (pedidos.isEmpty()) {
+			System.out.println("El cliente no tiene ningún pedido pendiente de enviar");
 		}
 		System.out.println("");
 		System.out.println("##########################################################################");
